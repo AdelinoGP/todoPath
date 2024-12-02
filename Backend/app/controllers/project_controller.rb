@@ -40,18 +40,17 @@ class ProjectController < ApplicationController
   end
 
   private
+      def set_project
+        @project = Project.find(params[:id])
+      end
 
-  def set_project
-    @project = Project.find(params[:id])
-  end
+      def project_params
+        params.permit(:title)
+      end
 
-  def project_params
-    params.permit(:title)
-  end
-
-  def authorize_user
-    unless @project.user == current_user
-      render json: { error: 'Not Authorized' }, status: :unauthorized
-    end
-  end
+      def authorize_user
+        unless @project.user == current_user
+          render json: { error: 'Not Authorized' }, status: :unauthorized
+        end
+      end
 end
