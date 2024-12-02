@@ -1,0 +1,31 @@
+{
+	"nodes":[
+		{"id":"593ab548bea51652","type":"text","text":"Create Todo","x":-160,"y":-1000,"width":250,"height":60},
+		{"id":"e6d0af74c63de886","type":"text","text":"Delete Todo","x":-160,"y":-900,"width":250,"height":60},
+		{"id":"b45bab7c2d38d603","type":"text","text":"Update Todo","x":205,"y":-1060,"width":250,"height":60},
+		{"id":"d4bc578799bcced4","type":"text","text":"Complete Todo","x":275,"y":-940,"width":250,"height":60},
+		{"id":"e9b10b7446d65ef8","type":"text","text":"Get Todo with Filtering","x":330,"y":-820,"width":250,"height":60},
+		{"id":"eeeb8f1752068a47","type":"text","text":"Todo Model","x":-500,"y":-1120,"width":180,"height":60},
+		{"id":"8a5f0c4bfa32eebc","type":"text","text":"Get Todos","x":-160,"y":-1120,"width":250,"height":60},
+		{"id":"f368fc8fe8a3efff","type":"text","text":"Todo Crud Done","x":393,"y":-720,"width":195,"height":50},
+		{"id":"d2aba7e2a097b591","type":"text","text":"Add Todo Tests","x":436,"y":-620,"width":180,"height":50},
+		{"id":"56c13862013d20ee","type":"text","text":"Basic Features Done","x":491,"y":-320,"width":250,"height":63},
+		{"id":"0cfeffdcd5346892","type":"text","text":"Create Frontend","x":491,"y":-520,"width":250,"height":60},
+		{"id":"22363288f18f7457","type":"text","text":"FrontEnd Testing","x":491,"y":-420,"width":250,"height":60}
+	],
+	"edges":[
+		{"id":"2e1bbee17b5ecba8","fromNode":"eeeb8f1752068a47","fromSide":"right","toNode":"593ab548bea51652","toSide":"left"},
+		{"id":"d303537fffab84a5","fromNode":"eeeb8f1752068a47","fromSide":"right","toNode":"e6d0af74c63de886","toSide":"left"},
+		{"id":"2023d51ed98670fb","fromNode":"593ab548bea51652","fromSide":"right","toNode":"b45bab7c2d38d603","toSide":"left"},
+		{"id":"d5b39c40561ebb65","fromNode":"e6d0af74c63de886","fromSide":"right","toNode":"b45bab7c2d38d603","toSide":"left"},
+		{"id":"2ae4b6d645a8ba4b","fromNode":"b45bab7c2d38d603","fromSide":"bottom","toNode":"d4bc578799bcced4","toSide":"top"},
+		{"id":"8a37ce9c0e7a9aab","fromNode":"eeeb8f1752068a47","fromSide":"right","toNode":"8a5f0c4bfa32eebc","toSide":"left"},
+		{"id":"50f1c82ce8a73404","fromNode":"8a5f0c4bfa32eebc","fromSide":"right","toNode":"b45bab7c2d38d603","toSide":"left"},
+		{"id":"efaaae9760aef8cc","fromNode":"d4bc578799bcced4","fromSide":"bottom","toNode":"e9b10b7446d65ef8","toSide":"top"},
+		{"id":"2d7388ca0aae327a","fromNode":"e9b10b7446d65ef8","fromSide":"bottom","toNode":"f368fc8fe8a3efff","toSide":"top"},
+		{"id":"a6392cf37151ec0d","fromNode":"f368fc8fe8a3efff","fromSide":"bottom","toNode":"d2aba7e2a097b591","toSide":"top"},
+		{"id":"d302c27fdb141ddd","fromNode":"d2aba7e2a097b591","fromSide":"bottom","toNode":"0cfeffdcd5346892","toSide":"top"},
+		{"id":"f51c2501f5ca7703","fromNode":"0cfeffdcd5346892","fromSide":"bottom","toNode":"22363288f18f7457","toSide":"top"},
+		{"id":"859fdc3a77007dc6","fromNode":"22363288f18f7457","fromSide":"bottom","toNode":"56c13862013d20ee","toSide":"top"}
+	]
+}
