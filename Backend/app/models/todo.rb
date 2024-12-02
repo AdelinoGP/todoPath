@@ -1,4 +1,6 @@
 class Todo < ApplicationRecord
+  belongs_to :project
+  
   validates :title, presence: true, length: { maximum: 140 }
   validates :description,  length: { maximum: 600 }
 
