@@ -11,14 +11,35 @@ class TodoControllerTest < ActionDispatch::IntegrationTest
     log_in_as @user
   end
 
-  test "should get index" do
+  test "should get index without filters" do
     get todo_index_url
     assert_response :success
+  end
+  
+  test "should get index with filters" do
+    get todo_index_url, params: { filters: { title: 'Test' } }
+    assert_response :success
+  end
+
+  test "should not get index if not logged in" do
+    log_out
+    get todo_index_url
+    assert_response :unauthorized
   end
 
   test "should get project todos" do
     get project_todos_project_index_url(project_id: @project.id)
     assert_response :success
+  end
+
+  test "should get project todos with filters" do
+    get project_todos_project_index_url(project_id: @project.id), params: { filters: { title: 'Test' } }
+    assert_response :success
+  end
+
+  test "should not get project todos if project not found" do
+    get project_todos_project_index_url(project_id: -1)
+    assert_response :not_found
   end
 
   test "should show todo" do
