@@ -1,15 +1,18 @@
 import { StyleSheet } from "react-native";
 import { Text, View } from "@/components/Themed";
+import { useState } from "react";
+import ProjectList from "@/components/projectList";
+import TodoList from "@/components/todoList";
 
 export default function UserHome() {
+  const [selectedProjectId, setSelectedProjectId] = useState<number | null>(
+    null
+  );
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>TodoPath</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
+      <ProjectList onSelect={setSelectedProjectId} />
+      {selectedProjectId && <TodoList projectId={selectedProjectId} />}
     </View>
   );
 }
