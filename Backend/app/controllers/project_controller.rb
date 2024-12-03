@@ -41,7 +41,8 @@ class ProjectController < ApplicationController
 
   private
       def set_project
-        @project = Project.find(params[:id])
+        @project = Project.find_by(id: params[:id])
+        render json: { error: 'Project not found' }, status: :not_found unless @project
       end
 
       def project_params
