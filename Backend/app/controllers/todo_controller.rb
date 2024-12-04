@@ -36,6 +36,9 @@ class TodoController < ApplicationController
 
   def update
     if @todo.update(todo_params)
+      if(todo_params[:is_completed] == false)
+        @todo.mark_as_uncompleted()
+      end
       render json: @todo
     else
       render json: @todo.errors, status: :unprocessable_entity
