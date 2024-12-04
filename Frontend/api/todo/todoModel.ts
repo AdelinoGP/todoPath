@@ -3,20 +3,21 @@ interface TodoModel {
     title: string;
     description?: string;
     project_id: number;
-    completed: boolean;
-    created_at: string;
-    updated_at: string;
+    is_completed: boolean;
+    completed_at?: Date;
+    created_at: Date;
+    updated_at: Date;
 }
 
 interface CreateTodoParams {
     title: string;
     description?: string;
     project_id: number;
-    completed?: boolean;
+    is_completed?: boolean;
 }
 
 interface UpdateTodoParams {
     title?: string;
     description?: string;
-    completed?: boolean;
+    is_completed?: boolean;
 }
