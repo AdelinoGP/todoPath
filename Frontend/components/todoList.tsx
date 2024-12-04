@@ -8,6 +8,7 @@ import {
 } from "@/api/todo/todoApi";
 import tw from "twrnc";
 import { Picker } from "@react-native-picker/picker";
+import { router } from "expo-router";
 
 interface TodoListProps {
   projectId: number;
@@ -96,6 +97,14 @@ const TodoList: React.FC<TodoListProps> = ({ projectId }) => {
 
   return (
     <View>
+      <View style={tw`p-2`}>
+        <Button
+          title="Add Todo"
+          onPress={() =>
+            router.push({ pathname: "/todo/create", params: { projectId } })
+          }
+        />
+      </View>
       <TextInput
         style={tw`border p-2 mb-2`}
         placeholder="Filter by title"

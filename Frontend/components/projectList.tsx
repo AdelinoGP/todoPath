@@ -60,7 +60,7 @@ const ProjectList: React.FC<{
           return <View style={tw`bg-gray-200 w-1 mr-2 H-full`} />;
         }}
         renderItem={({ item }) => (
-          <View style={tw`mr-4 border-4 p-2 rounded-md border-zinc-400`}>
+          <View style={tw`mr-4 border-2 p-2 rounded-md border-zinc-400`}>
             <TouchableOpacity
               style={[
                 tw`p-2 rounded mb-4`,
