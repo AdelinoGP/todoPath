@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { loginUser, register } from '@/api/user/userApi';
+import { loginUser, logoutUser, register } from '@/api/user/userApi';
 import { User } from '@/api/user/userModel';
 
 class AuthService {
@@ -36,6 +36,7 @@ class AuthService {
     }
 
     static async logout(): Promise<void> {
+        await logoutUser();
         await AsyncStorage.removeItem(this.userKey);
         await AsyncStorage.removeItem('backend_session');
     }
