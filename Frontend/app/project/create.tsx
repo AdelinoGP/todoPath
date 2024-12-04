@@ -2,7 +2,8 @@ import { createProject } from "@/api/project/projectApi";
 import { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { NavigationProp } from "@react-navigation/native";
-import { router } from "expo-router";
+import { router, useNavigation } from "expo-router";
+import tw from "twrnc";
 
 const ErrorMessage = ({ message }: { message: string }) => {
   if (!message) return null;
@@ -17,27 +18,32 @@ const CreateProject = () => {
   const [title, setTitle] = useState("");
   const [error, setError] = useState("");
 
+  const navigation = useNavigation();
+  navigation.setOptions({ title: "Create Project" });
+
   const handleCreateProject = async () => {
     try {
       const newProject = await createProject(title);
       setError("");
-      router.navigate("/userHome"); // Assuming you have a ProjectList screen
+      router.navigate("/userHome");
     } catch (error) {
       setError("Failed to create project");
     }
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>Project Title</Text>
-      <TextInput
-        style={styles.input}
-        value={title}
-        onChangeText={setTitle}
-        placeholder="Enter project title"
-      />
-      <Button title="Create Project" onPress={handleCreateProject} />
-      <ErrorMessage message={error} />
+    <View style={tw`flex-1 justify-center items-center bg-gray-100 p-4`}>
+      <View style={tw`bg-white p-6 rounded-lg shadow-md w-11/12 max-w-md`}>
+        <Text style={styles.label}>Project Title</Text>
+        <TextInput
+          style={styles.input}
+          value={title}
+          onChangeText={setTitle}
+          placeholder="Enter project title"
+        />
+        <Button title="Create Project" onPress={handleCreateProject} />
+        <ErrorMessage message={error} />
+      </View>
     </View>
   );
 };
