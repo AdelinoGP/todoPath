@@ -1,5 +1,5 @@
 import AuthService from '@/service/authService';
-import { router } from 'expo-router';
+import { router, useNavigation } from 'expo-router';
 import { useCallback, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { View, Text, TextInput, Button } from 'react-native';
@@ -10,6 +10,10 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+
+    const navigation = useNavigation();
+    navigation.setOptions({ title: 'Register' })
+    
     useFocusEffect(
         useCallback(() => {
             const checkUserLoggedIn = async () => {

@@ -1,5 +1,5 @@
 import { View, Text, TextInput, Button } from "react-native";
-import { router, useFocusEffect } from "expo-router";
+import { router, useFocusEffect, useNavigation } from "expo-router";
 import tw from "twrnc";
 import { useState, useCallback } from "react";
 import AuthService from "@/service/authService";
@@ -8,6 +8,9 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  const navigation = useNavigation();
+  navigation.setOptions({ title: 'Login' })
 
   useFocusEffect(
     useCallback(() => {

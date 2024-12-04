@@ -1,6 +1,6 @@
 import { createTodo } from "@/api/todo/todoApi";
 import { useState } from "react";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import {
   View,
   Text,
@@ -18,6 +18,9 @@ const CreateTodo = () => {
   const [completed, setCompleted] = useState(false);
   const [description, setDescription] = useState("");
   const [error, setError] = useState<string | null>(null);
+
+  const navigation = useNavigation();
+  navigation.setOptions({ title: 'Create Todo' })
 
   const handleSubmit = async () => {
     try {
