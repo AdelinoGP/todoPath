@@ -5,18 +5,29 @@ import { View, Text, FlatList, TouchableOpacity, Button } from "react-native";
 import tw from "twrnc";
 import { router } from "expo-router";
 
-const ProjectList: React.FC<{ onSelect: (id: number) => void }> = ({
-  onSelect,
-}) => {
+const ProjectList: React.FC<{
+  lastSelected: number | null;
+  onSelect: (id: number) => void;
+}> = ({ lastSelected, onSelect }) => {
   const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const [selectedProjectId, setSelectedProjectId] = useState<number | null>(
-    null
+    lastSelected
   );
 
   useEffect(() => {
     const fetchProjects = async () => {
-      const projects = await getProjects();
-      setProjects(projects);
+      try {
+        const projects = await getProjects();
+        setProjects(projects);
+        if(lastSelected) {
+          setSelectedProjectId(lastSelected);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchProjects();
@@ -36,26 +47,20 @@ const ProjectList: React.FC<{ onSelect: (id: number) => void }> = ({
     setProjects(projects.filter((project) => project.id !== id));
   };
 
+  if (loading) return <Text>Loading...</Text>;
+
   return (
-    <View style={tw`p-4 pr-4`}>
+    <View style={tw`p-2`}>
       <Text style={tw`text-lg font-bold mb-2`}>Select a Project</Text>
       <FlatList
         horizontal
         data={projects}
         keyExtractor={(item) => item.id.toString()}
         ItemSeparatorComponent={() => {
-          return (
-            <View
-              style={{
-                height: "100%",
-                width: 20,
-                backgroundColor: "#CED0CE",
-              }}
-            />
-          );
+          return <View style={tw`bg-gray-200 w-1 mr-2 H-full`} />;
         }}
         renderItem={({ item }) => (
-          <View style={tw`mr-4`}>
+          <View style={tw`mr-4 border-4 p-2 rounded-md border-zinc-400`}>
             <TouchableOpacity
               style={[
                 tw`p-2 rounded mb-4`,
