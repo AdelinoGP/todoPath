@@ -1,12 +1,14 @@
 Using:
 - Ruby on Rails
 Postgres
+PostGIS
 - GraphQL
 - Minitest
 
-React Native
-NativeWind
-React Native Reusables
+- React Native
+- Expo
+- NativeWind
+- React Native Reusables
 Cypress
 
 - Docker
