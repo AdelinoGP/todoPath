@@ -158,14 +158,14 @@ const TodoList: React.FC<TodoListProps> = ({ projectId }) => {
               }
             />
             <View style={tw`flex-row justify-between`}>
-              {item.is_completed ? (
+              {!item.is_completed ? (
                 <Button
-                  title="Uncomplete"
+                  title="Complete"
                   onPress={() => handleComplete(item.id)}
                 />
               ) : (
                 <Button
-                  title="Complete"
+                  title="Uncomplete"
                   onPress={() =>
                     handleUpdate(
                       item.id,

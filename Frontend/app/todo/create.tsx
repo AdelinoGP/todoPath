@@ -15,7 +15,7 @@ const CreateTodo = () => {
   const params = useLocalSearchParams();
   const { projectId } = params;
   const [title, setTitle] = useState("");
-  const [completed, setCompleted] = useState(false);
+  const [is_completed, setCompleted] = useState(false);
   const [description, setDescription] = useState("");
   const [error, setError] = useState<string | null>(null);
 
@@ -28,7 +28,7 @@ const CreateTodo = () => {
         title,
         description,
         project_id: Number(projectId),
-        completed,
+        is_completed,
       });
 
       router.navigate("/userHome");
@@ -66,7 +66,7 @@ const CreateTodo = () => {
           />
         </View>
         <View style={tw`mb-4 flex-row items-center`}>
-          <Switch value={completed} onValueChange={setCompleted} />
+          <Switch value={is_completed} onValueChange={setCompleted} />
           <Text style={tw`ml-2 text-lg`}>Completed</Text>
         </View>
         <Button title="Create Todo" onPress={handleSubmit} color="#3192ec" />
