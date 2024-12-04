@@ -35,10 +35,15 @@ const TodoList: React.FC<TodoListProps> = ({ projectId }) => {
   const handleUpdate = async (
     id: number,
     title: string,
-    description: string
+    description: string,
+    is_completed: boolean
   ) => {
     try {
-      const updatedTodo = await updateTodo(id, { title, description });
+      const updatedTodo = await updateTodo(id, {
+        title,
+        description,
+        is_completed,
+      });
       setTodos(todos.map((todo) => (todo.id === id ? updatedTodo : todo)));
     } catch (error) {
       console.error(error);
@@ -68,8 +73,8 @@ const TodoList: React.FC<TodoListProps> = ({ projectId }) => {
   }
 
   return (
-    <View >
-      <View style={tw`p-4`}>
+    <View>
+      <View style={tw`p-2`}>
         <Button
           title="Add Todo"
           onPress={() =>
@@ -81,24 +86,56 @@ const TodoList: React.FC<TodoListProps> = ({ projectId }) => {
         data={todos}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <View style={tw`mb-4 p-4 border rounded`}>
+          <View
+            style={[
+              tw`mb-4 p-4 border rounded`,
+              item.is_completed && tw`bg-green-200`,
+            ]}
+          >
             <TextInput
               style={tw`border p-2 mb-2`}
-              value={item.title}
-              onChangeText={(text) =>
-                handleUpdate(item.id, text, item.description ?? "")
+              defaultValue={item.title}
+              editable={true}
+              onBlur={(e) =>
+                handleUpdate(
+                  item.id,
+                  e.nativeEvent.text,
+                  item.description ?? "",
+                  item.is_completed
+                )
               }
             />
             <TextInput
               style={tw`border p-2 mb-2`}
-              value={item.description}
-              onChangeText={(text) => handleUpdate(item.id, item.title, text)}
+              defaultValue={item.description}
+              onBlur={(e) =>
+                handleUpdate(
+                  item.id,
+                  item.title,
+                  e.nativeEvent.text,
+                  item.is_completed
+                )
+              }
             />
             <View style={tw`flex-row justify-between`}>
-              <Button
-                title="Complete"
-                onPress={() => handleComplete(item.id)}
-              />
+              {item.is_completed ? (
+                <Button
+                  title="Uncomplete"
+                  onPress={() => handleComplete(item.id)}
+                />
+              ) : (
+                <Button
+                  title="Complete"
+                  onPress={() =>
+                    handleUpdate(
+                      item.id,
+                      item.title,
+                      item.description ?? "",
+                      false
+                    )
+                  }
+                />
+              )}
               <Button title="Delete" onPress={() => handleDelete(item.id)} />
             </View>
           </View>
