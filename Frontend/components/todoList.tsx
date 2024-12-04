@@ -6,8 +6,8 @@ import {
   deleteTodo,
   completeTodo,
 } from "@/api/todo/todoApi";
-import { router } from "expo-router";
 import tw from "twrnc";
+import { Picker } from "@react-native-picker/picker";
 
 interface TodoListProps {
   projectId: number;
@@ -16,6 +16,9 @@ interface TodoListProps {
 const TodoList: React.FC<TodoListProps> = ({ projectId }) => {
   const [todos, setTodos] = useState<TodoModel[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [filter, setFilter] = useState<string>("");
+  const [filterStatus, setFilterStatus] = useState<string>("none");
+  const [filteredTodos, setFilteredTodos] = useState<TodoModel[]>([]);
 
   useEffect(() => {
     const fetchTodos = async () => {
@@ -31,6 +34,25 @@ const TodoList: React.FC<TodoListProps> = ({ projectId }) => {
 
     fetchTodos();
   }, [projectId]);
+
+  useEffect(() => {
+    const filterTodos = () => {
+      const filtered = todos.filter((todo) => {
+        const matchesTitle = todo.title
+          .toLowerCase()
+          .includes(filter.toLowerCase());
+        if (filterStatus === "completed") {
+          return matchesTitle && todo.is_completed;
+        } else if (filterStatus === "uncompleted") {
+          return matchesTitle && !todo.is_completed;
+        }
+        return matchesTitle;
+      });
+      setFilteredTodos(filtered);
+    };
+
+    filterTodos();
+  }, [todos, filter, filterStatus]);
 
   const handleUpdate = async (
     id: number,
@@ -74,16 +96,25 @@ const TodoList: React.FC<TodoListProps> = ({ projectId }) => {
 
   return (
     <View>
-      <View style={tw`p-2`}>
-        <Button
-          title="Add Todo"
-          onPress={() =>
-            router.push({ pathname: "/todo/create", params: { projectId } })
-          }
-        />
-      </View>
+      <TextInput
+        style={tw`border p-2 mb-2`}
+        placeholder="Filter by title"
+        value={filter}
+        onChangeText={setFilter}
+      />
+      <Picker
+        selectedValue={filterStatus}
+        onValueChange={(itemValue: React.SetStateAction<string>) =>
+          setFilterStatus(itemValue)
+        }
+        style={tw`border p-2 mb-2`}
+      >
+        <Picker.Item label="None" value="none" />
+        <Picker.Item label="Completed" value="completed" />
+        <Picker.Item label="Uncompleted" value="uncompleted" />
+      </Picker>
       <FlatList
-        data={todos}
+        data={filteredTodos}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View
