@@ -26,11 +26,15 @@ This project is a Todo App built with Ruby on Rails for the backend and React Na
 
 1. **Clone the repository:**
     ```sh
-    git clone /z:/Projetos/todoPath.git
+    git clone https://github.com/AdelinoGP/todoPath.git
     cd todoPath
     ```
 
-2. **Backend setup:**
+2. **Backend setup:**    
+    - Navigate to the React Native project directory:
+      ```sh
+      cd Backend
+      ```
     - Install dependencies:
       ```sh
       bundle install
@@ -49,7 +53,7 @@ This project is a Todo App built with Ruby on Rails for the backend and React Na
 3. **Frontend setup:**
     - Navigate to the React Native project directory:
       ```sh
-      cd frontend
+      cd Frontend
       ```
     - Install dependencies:
       ```sh
