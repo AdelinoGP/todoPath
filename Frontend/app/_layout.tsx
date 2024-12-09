@@ -72,8 +72,8 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <InterceptorComponent />
       <Stack initialRouteName="index">
+        <InterceptorComponent />
         <Stack.Screen name="index" options={{}} />
         <Stack.Screen name="login" options={{}} />
         <Stack.Screen
@@ -81,10 +81,14 @@ function RootLayoutNav() {
           options={{ headerRight: HeaderRightButton }}
         />
         <Stack.Screen name="register" options={{}} />
-        <Stack.Screen name="todo/create" 
-          options={{ headerRight: HeaderRightButton }}/> 
-        <Stack.Screen name="project/create" 
-          options={{ headerRight: HeaderRightButton }}/>
+        <Stack.Screen
+          name="todo/create"
+          options={{ headerRight: HeaderRightButton }}
+        />
+        <Stack.Screen
+          name="project/create"
+          options={{ headerRight: HeaderRightButton }}
+        />
       </Stack>
     </ThemeProvider>
   );
