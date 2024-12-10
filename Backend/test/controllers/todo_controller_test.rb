@@ -59,6 +59,23 @@ class TodoControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should update todo completion" do
+    patch todo_url(@todo), params: { title: 'Updated Title', is_completed: true }
+    assert_response :success
+  end
+
+  test "should mark todo as incomplete" do
+    @todo.mark_as_completed()
+    assert_not_nil @todo.completed_at
+    put todo_url(@todo), params: { is_completed: false }
+    
+    @todo.reload
+    puts @todo.inspect
+    assert_response :success
+    assert_not @todo.is_completed, "Todo should not be marked as completed"
+    assert_nil @todo.completed_at, "Todo should not have a completed_at timestamp after being marked as incomplete"
+  end
+
   test "should destroy todo" do
     assert_difference('Todo.count', -1) do
       delete todo_url(@todo)
@@ -80,6 +97,7 @@ class TodoControllerTest < ActionDispatch::IntegrationTest
     patch todo_url(@other_todo), params: { title: 'Updated Title' }
     assert_response :unauthorized
   end
+  
 
   test "should not destroy todo of another user" do
     delete todo_url(@other_todo)
