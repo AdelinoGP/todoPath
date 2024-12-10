@@ -35,10 +35,13 @@ class TodoController < ApplicationController
   end
 
   def update
+    is_completed = ActiveModel::Type::Boolean.new.cast(todo_params[:is_completed])
+    if is_completed == false
+      @todo.mark_as_incomplete()
+    elsif is_completed == true && @todo.is_completed == false
+      @todo.mark_as_completed()
+    end
     if @todo.update(todo_params)
-      if(todo_params[:is_completed] == false)
-        @todo.mark_as_uncompleted()
-      end
       render json: @todo
     else
       render json: @todo.errors, status: :unprocessable_entity
@@ -67,7 +70,7 @@ class TodoController < ApplicationController
       end
 
       def todo_params
-        params.permit(:title, :description, :project_id)
+        params.permit(:title, :description, :project_id, :is_completed)
       end
 
       def authorize_user

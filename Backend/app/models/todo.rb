@@ -9,14 +9,10 @@ class Todo < ApplicationRecord
   attribute :completed_at, :datetime
 
   def mark_as_completed
-    self.is_completed = true
-    self.completed_at = Time.current
-    save
+    update(is_completed: true, completed_at: Time.current)
   end
-
-  def mark_as_uncompleted
-    self.is_completed = false
-    self.completed_at = nil
-    save
+ 
+  def mark_as_incomplete
+    update(is_completed: false, completed_at: nil)
   end
 end
