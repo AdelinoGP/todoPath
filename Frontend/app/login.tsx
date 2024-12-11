@@ -59,7 +59,7 @@ const LoginPage = () => {
         <View style={tw`mt-4`}>
           <Button
             title="Sign Up"
-            onPress={() => router.navigate("/register")}
+            onPress={() => router.push({ pathname: "/register", params: { email } })}
             color="#FF0000"
           />
         </View>

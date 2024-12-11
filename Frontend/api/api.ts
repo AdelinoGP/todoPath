@@ -1,5 +1,5 @@
 import axios from "axios";
-const backendURL = "http://localhost:3000";
+export const backendURL = "http://localhost:3000";
 
 console.log(`Running requests to ${backendURL}`);
 

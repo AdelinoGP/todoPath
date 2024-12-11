@@ -1,5 +1,5 @@
 import AuthService from '@/service/authService';
-import { router, useNavigation } from 'expo-router';
+import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { useCallback, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { View, Text, TextInput, Button } from 'react-native';
@@ -7,7 +7,8 @@ import tw from 'twrnc';
 
 const Register = () => {
     const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
+    const { email:loginemail } = useLocalSearchParams();
+    const [email, setEmail] = useState(String(loginemail) ?? '');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -55,16 +56,18 @@ const Register = () => {
             <View style={tw`bg-white p-6 rounded-lg shadow-md w-11/12 max-w-md`}>
                 <Text style={tw`text-2xl font-bold mb-4 text-center`}>Register</Text>
                 {errorMessage ? (
-                    <Text style={tw`text-red-500 mb-4 text-center`}>{errorMessage}</Text>
+                    <Text style={tw`text-red-500 mb-4 text-center`} accessibilityLabel='registerError'>{errorMessage}</Text>
                 ) : null}
                 <TextInput
                     style={tw`border border-gray-300 rounded p-2 mb-4 w-full`}
+                    accessibilityLabel = "name"
                     placeholder="Name"
                     value={name}
                     onChangeText={setName}
                 />
                 <TextInput
                     style={tw`border border-gray-300 rounded p-2 mb-4 w-full`}
+                    accessibilityLabel="email"
                     placeholder="Email"
                     value={email}
                     onChangeText={setEmail}
@@ -73,12 +76,13 @@ const Register = () => {
                 />
                 <TextInput
                     style={tw`border border-gray-300 rounded p-2 mb-4 w-full`}
+                    accessibilityLabel="password"
                     placeholder="Password"
                     value={password}
                     onChangeText={setPassword}
                     secureTextEntry
                 />
-                <Button title="Register" onPress={handleRegister} />
+                <Button title="Register" accessibilityLabel='registerButton' onPress={handleRegister} />
             </View>
         </View>
     );
