@@ -11,6 +11,8 @@ import {
 } from "react-native";
 import tw from "twrnc";
 
+//TODO: Deprecated
+
 const CreateTodo = () => {
   const params = useLocalSearchParams();
   const { projectId } = params;
@@ -18,12 +20,18 @@ const CreateTodo = () => {
   const [is_completed, setCompleted] = useState(false);
   const [description, setDescription] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [titleMissing, setTitleMissing] = useState<boolean>(false);
 
   const navigation = useNavigation();
-  navigation.setOptions({ title: 'Create Todo' })
+  navigation.setOptions({ title: "Create Todo" });
 
   const handleSubmit = async () => {
     try {
+      if (title == "") {
+        setError("Title is required");
+        setTitleMissing(true);
+        return;
+      }
       await createTodo({
         title,
         description,
@@ -31,6 +39,7 @@ const CreateTodo = () => {
         is_completed,
       });
 
+      setTitleMissing(false);
       router.navigate("/userHome");
     } catch (err) {
       setError("Failed to create todo");
@@ -49,7 +58,7 @@ const CreateTodo = () => {
         <View style={tw`mb-4`}>
           <Text style={tw`text-lg mb-2`}>Title</Text>
           <TextInput
-            style={tw`border border-gray-300 rounded p-2 w-full`}
+            style={tw`border border-gray-300 rounded p-2 w-full ${titleMissing ? 'border-red-500' : ''}`}
             value={title}
             onChangeText={setTitle}
             placeholder="Enter todo title"
