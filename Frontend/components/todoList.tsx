@@ -8,7 +8,7 @@ import {
 } from "@/api/todo/todoApi";
 import tw from "twrnc";
 import { Picker } from "@react-native-picker/picker";
-import { router } from "expo-router";
+import CreateTodoModal from "./createTodoModal";
 
 interface TodoListProps {
   projectId: number;
@@ -20,6 +20,7 @@ const TodoList: React.FC<TodoListProps> = ({ projectId }) => {
   const [filter, setFilter] = useState<string>("");
   const [filterStatus, setFilterStatus] = useState<string>("none");
   const [filteredTodos, setFilteredTodos] = useState<TodoModel[]>([]);
+  const [modalVisible, setModalVisible] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchTodos = async () => {
@@ -34,7 +35,7 @@ const TodoList: React.FC<TodoListProps> = ({ projectId }) => {
     };
 
     fetchTodos();
-  }, [projectId]);
+  }, [projectId, modalVisible]);
 
   useEffect(() => {
     const filterTodos = () => {
@@ -97,13 +98,13 @@ const TodoList: React.FC<TodoListProps> = ({ projectId }) => {
 
   return (
     <View>
+      <CreateTodoModal
+        modalVisible={modalVisible}
+        projectId={projectId}
+        setModalVisible={setModalVisible}
+      />
       <View style={tw`p-2`}>
-        <Button
-          title="Add Todo"
-          onPress={() =>
-            router.push({ pathname: "/todo/create", params: { projectId } })
-          }
-        />
+        <Button title="Add Todo" onPress={() => setModalVisible(true)} />
       </View>
       <TextInput
         style={tw`border p-2 mb-2`}
@@ -178,6 +179,13 @@ const TodoList: React.FC<TodoListProps> = ({ projectId }) => {
               )}
               <Button title="Delete" onPress={() => handleDelete(item.id)} />
             </View>
+
+            {item.is_completed && (
+              <Text style={tw`font-bold mb-4 text-center`}>
+                Completed at:{" "}
+                {new Date(item.completed_at ?? 0).toLocaleString()}
+              </Text>
+            )}
           </View>
         )}
       />
